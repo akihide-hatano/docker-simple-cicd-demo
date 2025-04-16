@@ -11,4 +11,4 @@ RUN npm ci && npm run test && npm run build
 # Hosting in nginx
 FROM nginx:latest AS prodution
 COPY --from=test-and-build /workspace/build /var/www
-COPY nginx.conf /ect/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
