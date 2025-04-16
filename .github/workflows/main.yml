@@ -1,17 +1,18 @@
-name: Deploy Simpel CI/CD
+name: Deploy Simple CI/CD 
 
 on:
   push:
     branches: ["main"]
 
 env:
-  AWS_REGION: us-east-1
+  AWS_REGION: us-west-2
   ECS_SERVICE: simple-cicd-service
   ECS_CLUSTER: simple-cicd-cluster
   ECS_TASK_DEFINITION: .aws/task-definition.json
 
 permissions:
-    contents: read
+  contents: read
+
 
 jobs:
   web-test-build-image:
@@ -21,6 +22,7 @@ jobs:
     defaults:
       run:
         working-directory: web
+    
     steps:
       - uses: actions/checkout@v3
 
@@ -53,7 +55,8 @@ jobs:
     timeout-minutes: 10
     defaults:
       run:
-        working-directory: .
+        working-directory: api
+  
     steps:
       - uses: actions/checkout@v3
 
@@ -82,7 +85,7 @@ jobs:
 
   deploy:
     name: Deploy
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-22.04 
     needs: [web-test-build-image, api-test-build-image]
 
     steps:
@@ -123,3 +126,27 @@ jobs:
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
+
+# Web Container Build/Test
+## Get Source
+## Build/Test
+## Docker Image Build
+## Login AWS
+## Push image to ECR
+
+# API Container Build/Test
+## Get Source
+## Build/Test
+## Docker Image Build
+## Login AWS
+## Push image to ECR
+
+# Deploy
+## Get Source
+## Login AWS
+## Edit Task Definition
+## Deploy
+
+
+
+
