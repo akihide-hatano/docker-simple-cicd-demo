@@ -53,8 +53,7 @@ jobs:
     timeout-minutes: 10
     defaults:
       run:
-        working-directory: api
-
+        working-directory: .
     steps:
       - uses: actions/checkout@v3
 
